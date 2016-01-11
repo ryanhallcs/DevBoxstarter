@@ -82,8 +82,8 @@ $UNPIN = (
 foreach ($item in $UNPIN)
 {
     if ($item){
-        $shell = new-object -com "Shell.Application"  
-        $folder = $shell.Namespace($item[0])    
+        $shell = new-object -com "Shell.Application"
+        $folder = $shell.Namespace($item[0])
         $item = $folder.Parsename($item[1])
         $verb = $item.Verbs() | ? {$_.Name -eq 'Unpin from Tas&kbar'}
         if ($verb) {$verb.DoIt()}
@@ -98,8 +98,8 @@ $PIN = (
 foreach ($item in $PIN)
 {
     if ($item){
-        $shell = new-object -com "Shell.Application"  
-        $folder = $shell.Namespace($item[0])    
+        $shell = new-object -com "Shell.Application"
+        $folder = $shell.Namespace($item[0])
         $item = $folder.Parsename($item[1])
         $verb = $item.Verbs() | ? {$_.Name -eq 'Pin to Tas&kbar'}
         if ($verb) {$verb.DoIt()}
