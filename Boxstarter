@@ -5,7 +5,7 @@ $Boxstarter.AutoLogin=$true # Save my password securely and auto-login after a r
 
 # Basic setup
 Update-ExecutionPolicy Unrestricted
-Set-ExplorerOptions -showFileExtensions
+Set-ExplorerOptions -showHidenFilesFoldersDrives -showProtectedOSFiles -showFileExtensions
 Disable-InternetExplorerESC
 Set-TaskbarSmall
 
@@ -75,4 +75,33 @@ choco install -y IIS-HttpCompressionDynamic -source windowsfeatures
 choco install -y IIS-ManagementScriptingTools -source windowsfeatures
 choco install -y IIS-WindowsAuthentication -source windowsfeatures
 
+$UNPIN = (
+	("C:\Program Files\Internet Explorer\","iexplore.exe"),
+	$null)
 
+foreach ($item in $UNPIN)
+{
+    if ($item){
+        $shell = new-object -com "Shell.Application"  
+        $folder = $shell.Namespace($item[0])    
+        $item = $folder.Parsename($item[1])
+        $verb = $item.Verbs() | ? {$_.Name -eq 'Unpin from Tas&kbar'}
+        if ($verb) {$verb.DoIt()}
+    }
+}
+
+$PIN = (
+	("C:\Program Files (x86)\Google\Chrome\Application\","chrome.exe"),
+    ("C:\windows\system32\WindowsPowerShell\v1.0\","powershell.exe"),
+    ("C:\Program Files\Sublime Text 3","sublime_text.exe"),
+	$null)
+foreach ($item in $PIN)
+{
+    if ($item){
+        $shell = new-object -com "Shell.Application"  
+        $folder = $shell.Namespace($item[0])    
+        $item = $folder.Parsename($item[1])
+        $verb = $item.Verbs() | ? {$_.Name -eq 'Pin to Tas&kbar'}
+        if ($verb) {$verb.DoIt()}
+    }
+}
